@@ -1,19 +1,19 @@
 import argparse
-import requests
-import json
-import time
+import os
+import numpy as np
 import speech_recognition as sr
 
+from datetime import datetime, timedelta
 from queue import Queue
+from time import sleep
 from sys import platform
-
-
+import requests
+import time
 def stream_audio_data(data):
     """
     Generator function to yield audio data chunks.
     """
     yield data
-
 
 def publish_http_stream(url, audio_data):
     """
@@ -80,7 +80,7 @@ def main():
         """
         # Grab the raw bytes and push it into the thread safe queue.
         data = audio.get_raw_data()
-        publish_http_stream("", data)
+        publish_http_stream("127.0.0.1:5000", data)
 
     with source:
         while True:
